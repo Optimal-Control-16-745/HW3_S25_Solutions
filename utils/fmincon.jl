@@ -18,6 +18,7 @@ struct ProblemMOI <: MOI.AbstractNLPEvaluator
     diff_type # :Symbol
 end
 
+#this function was checked
 function ProblemMOI(n_nlp,m_nlp,params,cost,con,diff_type;
         obj_grad=true,
         con_jac=true,
@@ -35,9 +36,11 @@ function ProblemMOI(n_nlp,m_nlp,params,cost,con,diff_type;
         cost,
         con,
         diff_type)
+
 end
 
 function row_col!(row,col,r,c)
+
     for cc in c
         for rr in r
             push!(row,convert(Int,rr))
@@ -49,8 +52,9 @@ end
 
 function sparsity_jacobian(n,m)
 
-    row = []
-    col = []
+    #create empty arrays for row and column indices. Type Int64
+    row = Int64[]
+    col = Int64[]
 
     r = 1:m
     c = 1:n
@@ -62,8 +66,9 @@ end
 
 function sparsity_hessian(n,m)
 
-    row = []
-    col = []
+    #create empty arrays for row and column indices. Type Int64
+    row = Int64[]
+    col = Int64[]
 
     r = 1:m
     c = 1:n
@@ -107,6 +112,7 @@ function MOI.features_available(prob::MOI.AbstractNLPEvaluator)
 end
 
 MOI.initialize(prob::MOI.AbstractNLPEvaluator, features) = nothing
+
 MOI.jacobian_structure(prob::MOI.AbstractNLPEvaluator) = prob.sparsity_jac
 
 
@@ -246,7 +252,9 @@ function fmincon(cost::Function,
     verbose && println("---------IPOPT beginning solve----------------------")
 
     MOI.set(solver, MOI.NLPBlock(), block_data)
+
     MOI.set(solver, MOI.ObjectiveSense(), MOI.MIN_SENSE)
+
     MOI.optimize!(solver)
 
     # Get the solution
@@ -255,4 +263,3 @@ function fmincon(cost::Function,
     return res 
     
 end
-
