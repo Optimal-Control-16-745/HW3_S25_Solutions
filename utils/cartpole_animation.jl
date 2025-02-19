@@ -23,7 +23,8 @@ end
 function animate_cartpole(X, dt)
     vis = mc.Visualizer()
     create_cartpole!(vis)
-    anim = mc.Animation(floor(Int,1/dt))
+    #updated for julia 1.10.7
+    anim = mc.Animation(vis, fps=floor(Int,1/dt))
     for k = 1:length(X)
         mc.atframe(anim, k) do
             update_cartpole_transform!(vis,X[k])
