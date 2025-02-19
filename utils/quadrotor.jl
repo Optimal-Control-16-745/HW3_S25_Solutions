@@ -92,7 +92,7 @@ function animate_quadrotor(Xsim, Xref, dt)
     mc.setobject!(vis[:target], target, mc.MeshPhongMaterial(color = mc.RGBA(0.0,1.0,0.0,0.4)))
 
 
-    anim = mc.Animation(floor(Int,1/dt))
+    anim = mc.Animation(vis, fps=floor(Int,1/dt))
     for k = 1:length(Xsim)
         mc.atframe(anim, k) do
             r = Xsim[k][1:3]
