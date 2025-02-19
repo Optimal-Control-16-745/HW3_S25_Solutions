@@ -45,7 +45,8 @@ function animate_planar_quadrotors(x1,x2,x3, dt)
     mc.setobject!(vis[:vic2], robot_obj,mc.MeshPhongMaterial(color=c2))
     mc.setobject!(vis[:vic3], robot_obj,mc.MeshPhongMaterial(color=c3))
 
-    anim = mc.Animation(floor(Int,1/dt))
+    #update this code
+    anim = mc.Animation(vis, fps = floor(Int,1/dt))
     for k = 1:length(X1)
         mc.atframe(anim, k) do
             update_quad_pose!(vis, :vic1, x1[k])
